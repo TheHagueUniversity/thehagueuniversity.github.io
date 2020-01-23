@@ -2,41 +2,45 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>example page</title>
+    <title>showcase</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
   </head>
   <body>
-
-    <div class="container">
-  	<article>
-  		<img src="image.jpg" alt="this is an image of a city">
-  		<h1>Title</h1>
-  		<p class="clear">some description text for this article would be great</p>
-
-  	</article>
-  </div>
-
-  
-  	<div class="flexbox">
-  		<box class="first">box 1<p>more</p></box>
-  		<box class="second">box 2</box>
-  		<box>box 3</box>
-  	</div>
-
-
-    <div class="grid">
-      <box class="first">box 1</box>
-      <box class="second">box 2</box>
-      <box>box 3</box>
-      <box >box 4</box>
-      <box >box 5</box>
-      <box>box 6</box>
-      <box >box 7</box>
-      <box >box 8</box>
-      <box>box 9</box>
-    </div>
-
-
+    <h1>Showcase U X D portfolios</h1>
+   <div id="result"></div>
 
   </body>
+
+
+  <script type="text/javascript">
+    
+$( document ).ready( function() {
+
+$( '#result' ).html( "" );
+var html = "<h2>Portfolios</h2>";
+$.ajax( {
+      url : "https://api.github.com/orgs/TheHagueUniversity/repos?sort=updated&&page=1",
+  
+      success : function ( returndata, textStatus, jqXHR ) {
+        console.log(jqXHR.getResponseHeader('Link'))
+        console.log(returndata)
+        $.each( returndata, function ( i, item ) {
+          if(this.has_pages){
+            html += '' +
+              '<h3><iframe src="https://thehagueuniversity.github.io/' + this.name + '"/><a href="https://thehagueuniversity.github.io/' + this.name + '">' + this.name + '</a></h3>' +
+              '';
+            }
+        } );
+      $( '#result' ).append( html );
+     } // close success handler
+     });
+
+
+}); //close document ready
+  
+
+
+  </script>
 </html>
